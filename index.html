@@ -940,7 +940,7 @@
         </div>
 
         <div class="lg:col-span-5 bg-forest-deep/75 border border-linen/15 rounded-2xl p-6">
-          <form id="inline-audit-form" action="mailto:md@ironvis.com" method="POST" enctype="text/plain" onsubmit="openAuditEmail(event)" class="space-y-4">
+          <form id="inline-audit-form" action="https://formspree.io/f/xnppyalb" method="POST" class="space-y-4">
             <div>
               <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Work Email</label>
               <input
@@ -957,10 +957,10 @@
                 class="w-full rounded-xl bg-forest-mid/80 border border-linen/20 px-3.5 py-2.5 text-sm text-linen focus:outline-none focus:border-brass"
                 data-cursor-hover
               >
-                <option value="exploded">Exploded-View Product Animation</option>
-                <option value="renders">Photoreal Studio Product Renders</option>
-                <option value="interactive">Interactive 3D Web / Catalog Viewer</option>
-                <option value="audit">Full Visual Gap Audit</option>
+                <option>Exploded-View Product Animation</option>
+                <option>Photoreal Studio Product Renders</option>
+                <option>Interactive 3D Web / Catalog Viewer</option>
+                <option>Full Visual Gap Audit</option>
               </select>
             </div>
             <button
@@ -972,12 +972,12 @@
                 <span class="pulse-red-ring absolute inline-flex h-full w-full rounded-full bg-red-500"></span>
                 <span class="blink-red-dot relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF3B30]"></span>
               </span>
-              <span>Open Email Draft</span>
+              <span>Send Audit Request</span>
             </button>
             <p class="text-center text-[11px] font-mono text-brass">
               ⚡ Only 2 slots left for November production
             </p>
-            <p class="text-xs text-linen/70">This opens your email app with the request filled in. Send the draft, or email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
+            <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
           </form>
         </div>
       </div>
@@ -1061,7 +1061,7 @@
         Share your product page or CAD goals below. We’ll record a custom 3D visual teardown showing how to make your robot or machine immediately clear to buyers.
       </p>
 
-      <form action="mailto:md@ironvis.com" method="POST" enctype="text/plain" onsubmit="openAuditEmail(event)" id="modal-audit-form" class="mt-5 space-y-4">
+      <form action="https://formspree.io/f/xnppyalb" method="POST" id="modal-audit-form" class="mt-5 space-y-4">
         <div>
           <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Your Name &amp; Role</label>
           <input type="text" name="Name and role" maxlength="160" required placeholder="Alex Rivera — VP of Marketing" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
@@ -1079,9 +1079,9 @@
             <span class="pulse-red-ring absolute inline-flex h-full w-full rounded-full bg-red-500"></span>
             <span class="blink-red-dot relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF3B30]"></span>
           </span>
-          <span>Open Email Draft</span>
+          <span>Send Audit Request</span>
         </button>
-        <p class="text-xs text-linen/70">This opens your email app with the request filled in. Send the draft, or email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
+        <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
       </form>
 
     </div>
@@ -1118,7 +1118,7 @@
     updateBangladeshClock();
 
     /* ---------------------------------------------------------------------
-       2. AUDIT MODAL, MOBILE DRAWER & EMAIL DRAFT
+       2. AUDIT MODAL & MOBILE DRAWER
        --------------------------------------------------------------------- */
     function toggleMobileNav() {
       const drawer = document.getElementById('mobile-nav-drawer');
@@ -1153,18 +1153,6 @@
       modal.classList.add('flex');
     }
 
-    function openAuditEmail(event) {
-      event.preventDefault();
-      const form = event.currentTarget;
-      const details = Array.from(new FormData(form), ([field, value]) => {
-        const label = field === 'email' ? 'Work email' : field;
-        const text = field === 'Primary goal' ? form.elements[field].selectedOptions[0].text : value;
-        return text ? label + ': ' + text : '';
-      }).filter(Boolean);
-      const subject = encodeURIComponent('IRONVIS audit request');
-      const body = encodeURIComponent(details.join('\r\n'));
-      window.location.href = 'mailto:md@ironvis.com?subject=' + subject + '&body=' + body;
-    }
 
     function closeAuditModal() {
       const modal = document.getElementById('audit-modal');
