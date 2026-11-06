@@ -74,6 +74,16 @@
       }
     }
 
+    /* The confirmation dialog is above the page's custom cursor. */
+    #audit-confirmation[open],
+    #audit-confirmation[open]::backdrop {
+      cursor: auto !important;
+    }
+
+    #audit-confirmation[open] button {
+      cursor: pointer !important;
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
