@@ -940,7 +940,7 @@
         </div>
 
         <div class="lg:col-span-5 bg-forest-deep/75 border border-linen/15 rounded-2xl p-6">
-          <form id="inline-audit-form" action="https://formspree.io/f/xnppyalb" method="POST" class="space-y-4">
+          <form id="inline-audit-form" action="https://formspree.io/f/xnppyalb" method="POST" onsubmit="submitAuditRequest(event)" class="space-y-4">
             <div>
               <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Work Email</label>
               <input
@@ -977,6 +977,7 @@
             <p class="text-center text-[11px] font-mono text-brass">
               ⚡ Only 2 slots left for November production
             </p>
+            <p class="text-sm text-linen" role="status" data-audit-status></p>
             <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
           </form>
         </div>
@@ -1061,7 +1062,7 @@
         Share your product page or CAD goals below. We’ll record a custom 3D visual teardown showing how to make your robot or machine immediately clear to buyers.
       </p>
 
-      <form action="https://formspree.io/f/xnppyalb" method="POST" id="modal-audit-form" class="mt-5 space-y-4">
+      <form action="https://formspree.io/f/xnppyalb" method="POST" onsubmit="submitAuditRequest(event)" id="modal-audit-form" class="mt-5 space-y-4">
         <div>
           <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Your Name &amp; Role</label>
           <input type="text" name="Name and role" maxlength="160" required placeholder="Alex Rivera — VP of Marketing" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
@@ -1081,6 +1082,7 @@
           </span>
           <span>Send Audit Request</span>
         </button>
+        <p class="text-sm text-linen" role="status" data-audit-status></p>
         <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
       </form>
 
@@ -1153,6 +1155,36 @@
       modal.classList.add('flex');
     }
 
+
+    async function submitAuditRequest(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const button = form.querySelector('button[type="submit"]');
+      const status = form.querySelector('[data-audit-status]');
+      if (button.disabled) return;
+
+      button.disabled = true;
+      status.textContent = 'Sending your request…';
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+        if (response.ok) {
+          form.reset();
+          status.textContent = 'Thanks! Your audit request was sent.';
+        } else if (response.status === 429) {
+          status.textContent = 'Please wait a minute and try again.';
+        } else {
+          status.textContent = 'We could not send your request. Please try again or email md@ironvis.com.';
+        }
+      } catch {
+        status.textContent = 'We could not confirm your request. Check your connection and try again.';
+      } finally {
+        button.disabled = false;
+      }
+    }
 
     function closeAuditModal() {
       const modal = document.getElementById('audit-modal');
