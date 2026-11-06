@@ -940,11 +940,12 @@
         </div>
 
         <div class="lg:col-span-5 bg-forest-deep/75 border border-linen/15 rounded-2xl p-6">
-          <form id="inline-audit-form" onsubmit="handleAuditSubmit(event)" class="space-y-4">
+          <form id="inline-audit-form" action="https://formsubmit.co/md@ironvis.com" method="POST" class="space-y-4">
+            <input type="hidden" name="_subject" value="New IRONVIS audit request" />
             <div>
               <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Work Email</label>
               <input
-                type="email"
+                type="email" name="email" maxlength="254"
                 required
                 placeholder="name@robotics-company.com"
                 class="w-full rounded-xl bg-forest-mid/80 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass"
@@ -953,7 +954,7 @@
             </div>
             <div>
               <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Primary Goal</label>
-              <select
+              <select name="Primary goal"
                 class="w-full rounded-xl bg-forest-mid/80 border border-linen/20 px-3.5 py-2.5 text-sm text-linen focus:outline-none focus:border-brass"
                 data-cursor-hover
               >
@@ -977,12 +978,8 @@
             <p class="text-center text-[11px] font-mono text-brass">
               ⚡ Only 2 slots left for November production
             </p>
+            <p class="text-xs text-linen/70">FormSubmit delivers this request to IRONVIS. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
           </form>
-          <div id="audit-success-msg" class="hidden text-center py-6 space-y-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto font-mono">✓</div>
-            <h4 class="text-base font-semibold text-linen">Audit Slot Reserved</h4>
-            <p class="text-xs text-linen/70">Mahdi from Ironvis will send your personalized visual audit &amp; calendar link within 24 hours.</p>
-          </div>
         </div>
       </div>
 
@@ -1065,18 +1062,19 @@
         Share your product page or CAD goals below. We’ll record a custom 3D visual teardown showing how to make your robot or machine immediately clear to buyers.
       </p>
 
-      <form onsubmit="handleModalSubmit(event)" id="modal-audit-form" class="mt-5 space-y-4">
+      <form action="https://formsubmit.co/md@ironvis.com" method="POST" id="modal-audit-form" class="mt-5 space-y-4">
+        <input type="hidden" name="_subject" value="New IRONVIS audit request" />
         <div>
           <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Your Name &amp; Role</label>
-          <input type="text" required placeholder="Alex Rivera — VP of Marketing" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
+          <input type="text" name="Name and role" maxlength="160" required placeholder="Alex Rivera — VP of Marketing" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
         </div>
         <div>
           <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Company Email</label>
-          <input type="email" required placeholder="alex@robotics-oem.com" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
+          <input type="email" name="email" maxlength="254" required placeholder="alex@robotics-oem.com" class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
         </div>
         <div>
           <label class="block text-[11px] font-mono uppercase text-linen/60 mb-1">Website / Product Line URL</label>
-          <input type="text" placeholder="https://..." class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
+          <input type="url" name="Website or product URL" maxlength="500" placeholder="https://..." class="w-full rounded-xl bg-forest-deep/90 border border-linen/20 px-3.5 py-2.5 text-sm text-linen placeholder-linen/30 focus:outline-none focus:border-brass" data-cursor-hover />
         </div>
         <button type="submit" class="w-full ios-glass-pill rounded-xl py-3.5 text-sm font-semibold text-linen flex items-center justify-center gap-2.5 border border-brass/60" data-cursor-hover>
           <span class="relative flex h-2.5 w-2.5">
@@ -1085,14 +1083,9 @@
           </span>
           <span>Confirm Audit Request</span>
         </button>
+        <p class="text-xs text-linen/70">FormSubmit delivers this request to IRONVIS. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
       </form>
 
-      <div id="modal-success" class="hidden text-center py-6 space-y-3">
-        <div class="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-lg font-mono">✓</div>
-        <h4 class="text-lg font-semibold text-linen">Audit Request Received</h4>
-        <p class="text-xs text-linen/75">We’ve locked in one of the 2 remaining slots for your review. Expect a personal reply from Mahdi shortly.</p>
-        <button onclick="closeAuditModal()" class="mt-2 px-5 py-2 rounded-full bg-linen/15 text-xs font-mono text-linen">Close Window</button>
-      </div>
     </div>
   </div>
 
@@ -1127,7 +1120,7 @@
     updateBangladeshClock();
 
     /* ---------------------------------------------------------------------
-       2. AUDIT MODAL, MOBILE DRAWER & FORM HANDLERS (No alert() used)
+       2. AUDIT MODAL & MOBILE DRAWER
        --------------------------------------------------------------------- */
     function toggleMobileNav() {
       const drawer = document.getElementById('mobile-nav-drawer');
@@ -1166,18 +1159,6 @@
       const modal = document.getElementById('audit-modal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
-    }
-
-    function handleAuditSubmit(e) {
-      e.preventDefault();
-      document.getElementById('inline-audit-form').classList.add('hidden');
-      document.getElementById('audit-success-msg').classList.remove('hidden');
-    }
-
-    function handleModalSubmit(e) {
-      e.preventDefault();
-      document.getElementById('modal-audit-form').classList.add('hidden');
-      document.getElementById('modal-success').classList.remove('hidden');
     }
 
     /* ---------------------------------------------------------------------
