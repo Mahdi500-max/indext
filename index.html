@@ -977,7 +977,14 @@
             <p class="text-center text-[11px] font-mono text-brass">
               ⚡ Only 2 slots left for November production
             </p>
-            <p class="text-sm text-linen" role="status" data-audit-status></p>
+            <div role="status" class="text-sm text-linen">
+              <p data-audit-status></p>
+              <div data-audit-success class="hidden text-center py-4 space-y-2">
+                <span aria-hidden="true" class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-lg">✓</span>
+                <p class="font-semibold">We received your email.</p>
+                <p class="text-xs text-linen/75">Thanks for requesting an audit. We’ll get back to you soon.</p>
+              </div>
+            </div>
             <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
           </form>
         </div>
@@ -1082,7 +1089,14 @@
           </span>
           <span>Send Audit Request</span>
         </button>
-        <p class="text-sm text-linen" role="status" data-audit-status></p>
+        <div role="status" class="text-sm text-linen">
+          <p data-audit-status></p>
+          <div data-audit-success class="hidden text-center py-4 space-y-2">
+            <span aria-hidden="true" class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-lg">✓</span>
+            <p class="font-semibold">We received your email.</p>
+            <p class="text-xs text-linen/75">Thanks for requesting an audit. We’ll get back to you soon.</p>
+          </div>
+        </div>
         <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
       </form>
 
@@ -1161,9 +1175,11 @@
       const form = event.currentTarget;
       const button = form.querySelector('button[type="submit"]');
       const status = form.querySelector('[data-audit-status]');
+      const success = form.querySelector('[data-audit-success]');
       if (button.disabled) return;
 
       button.disabled = true;
+      success.classList.add('hidden');
       status.textContent = 'Sending your request…';
       try {
         const response = await fetch(form.action, {
@@ -1173,7 +1189,8 @@
         });
         if (response.ok) {
           form.reset();
-          status.textContent = 'Thanks! Your audit request was sent.';
+          status.textContent = '';
+          success.classList.remove('hidden');
         } else if (response.status === 429) {
           status.textContent = 'Please wait a minute and try again.';
         } else {
