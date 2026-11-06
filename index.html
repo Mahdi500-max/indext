@@ -977,14 +977,7 @@
             <p class="text-center text-[11px] font-mono text-brass">
               ⚡ Only 2 slots left for November production
             </p>
-            <div role="status" class="text-sm text-linen">
-              <p data-audit-status></p>
-              <div data-audit-success class="hidden text-center py-4 space-y-2">
-                <span aria-hidden="true" class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-lg">✓</span>
-                <p class="font-semibold">We received your email.</p>
-                <p class="text-xs text-linen/75">Thanks for requesting an audit. We’ll get back to you soon.</p>
-              </div>
-            </div>
+            <p class="text-sm text-linen" role="status" data-audit-status></p>
             <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
           </form>
         </div>
@@ -1089,14 +1082,7 @@
           </span>
           <span>Send Audit Request</span>
         </button>
-        <div role="status" class="text-sm text-linen">
-          <p data-audit-status></p>
-          <div data-audit-success class="hidden text-center py-4 space-y-2">
-            <span aria-hidden="true" class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-lg">✓</span>
-            <p class="font-semibold">We received your email.</p>
-            <p class="text-xs text-linen/75">Thanks for requesting an audit. We’ll get back to you soon.</p>
-          </div>
-        </div>
+        <p class="text-sm text-linen" role="status" data-audit-status></p>
         <p class="text-xs text-linen/70">Your request is sent through Formspree. You can also email <a href="mailto:md@ironvis.com" class="underline">md@ironvis.com</a>.</p>
       </form>
 
@@ -1175,11 +1161,9 @@
       const form = event.currentTarget;
       const button = form.querySelector('button[type="submit"]');
       const status = form.querySelector('[data-audit-status]');
-      const success = form.querySelector('[data-audit-success]');
       if (button.disabled) return;
 
       button.disabled = true;
-      success.classList.add('hidden');
       status.textContent = 'Sending your request…';
       try {
         const response = await fetch(form.action, {
@@ -1190,7 +1174,8 @@
         if (response.ok) {
           form.reset();
           status.textContent = '';
-          success.classList.remove('hidden');
+          if (form.id === 'modal-audit-form') closeAuditModal();
+          document.getElementById('audit-confirmation').showModal();
         } else if (response.status === 429) {
           status.textContent = 'Please wait a minute and try again.';
         } else {
@@ -2664,5 +2649,14 @@
       window.dispatchEvent(new Event('resize'));
     };
   </script>
+  <dialog id="audit-confirmation" aria-labelledby="audit-confirmation-title" aria-describedby="audit-confirmation-copy" class="m-auto w-11/12 max-w-sm rounded-2xl border border-linen/20 bg-forest-deep p-6 text-center text-linen backdrop:bg-black/70">
+    <span aria-hidden="true" class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400 bg-emerald-500/20 text-xl text-emerald-300">✓</span>
+    <h2 id="audit-confirmation-title" class="mt-4 text-lg font-semibold">We received your email.</h2>
+    <p id="audit-confirmation-copy" class="mt-2 text-sm text-linen/75">Thanks for requesting an audit. We’ll get back to you soon.</p>
+    <form method="dialog" class="mt-5">
+      <button type="submit" autofocus class="ios-glass-pill rounded-full border border-linen/20 px-5 py-2 text-sm font-semibold">Close</button>
+    </form>
+  </dialog>
+
 </body>
 </html>
